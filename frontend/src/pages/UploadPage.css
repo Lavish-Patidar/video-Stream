@@ -1,0 +1,108 @@
+.upload-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+}
+
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-size: 1rem;
+}
+
+.file-input {
+    padding: 1rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+
+.file-input:hover {
+    border-color: var(--primary-color);
+    background-color: #f8fafc;
+}
+
+.file-input.dragover {
+    border-color: var(--primary-color);
+    background-color: #e0f2fe;
+}
+
+.upload-button {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 15px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+}
+
+.upload-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.upload-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.progress-bar {
+    height: 0.5rem;
+    background-color: #e2e8f0;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .upload-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .upload-form {
+        gap: 1rem;
+    }
+}
