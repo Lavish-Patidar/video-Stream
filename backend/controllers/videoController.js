@@ -8,12 +8,22 @@ const uploadVideo = async (req, res) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
+        // Check file size (10MB limit)
+        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+        if (req.file.size > maxSize) {
+            return res.status(400).json({
+                message: 'File size exceeds 10MB limit'
+            });
+        }
+
+
         const conn = mongoose.connection;
         const gfs = new GridFSBucket(conn.db, {
             bucketName: 'videos',
         });
 
-        const uploadStream = gfs.openUploadStream(req.file.originalname, {
+        const filename = req.file.originalname;
+        const uploadStream = gfs.openUploadStream(filename, {
             contentType: req.file.mimetype,
         });
 
@@ -21,9 +31,9 @@ const uploadVideo = async (req, res) => {
 
         // Save video metadata
         const video = new Video({
-            filename: req.file.originalname,
+            filename: filename,
             contentType: req.file.mimetype,
-            title: req.body.title || req.file.originalname,
+            title: req.body.title || filename,
         });
 
         await video.save();
@@ -91,15 +101,21 @@ const deleteVideo = async (req, res) => {
             return res.status(404).json({ message: 'Video not found' });
         }
 
-        // Delete the video file from GridFS
         const conn = mongoose.connection;
         const gfs = new GridFSBucket(conn.db, {
             bucketName: 'videos',
         });
 
-        await gfs.delete(deletedVideo._id);
+        // Find and delete the video file from GridFS using filename
+        const file = await conn.db.collection('videos.files').findOne({ filename: deletedVideo.filename });
+        if (file) {
+            await gfs.delete(file._id);
+            // Delete all chunks associated with the video using files_id
+            const chunksCollection = conn.db.collection('videos.chunks');
+            await chunksCollection.deleteMany({ files_id: file._id });
+        }
 
-        res.status(200).json({ message: 'Video deleted successfully' });
+        res.status(200).json({ message: 'Video and all associated chunks deleted successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

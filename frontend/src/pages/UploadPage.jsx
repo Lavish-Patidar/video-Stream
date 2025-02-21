@@ -11,11 +11,19 @@ const UploadPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUploading(true);
 
+        // Check file size (10MB limit)
+        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+        if (file.size > maxSize) {
+            setMessage({ type: 'error', text: 'File size exceeds 10MB limit' });
+            return;
+        }
+
+        setUploading(true);
         const formData = new FormData();
         formData.append('video', file);
         formData.append('title', title);
+
 
         try {
             const response = await axios.post('http://localhost:3000/api/videos/upload', formData, {
@@ -51,7 +59,7 @@ const UploadPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="video">Select Video</label>
+                    <label htmlFor="video">Select Video (max 10MB)</label>
                     <input
                         type="file"
                         className='file-input'
@@ -60,6 +68,7 @@ const UploadPage = () => {
                         onChange={(e) => setFile(e.target.files[0])}
                         required
                     />
+
                 </div>
                 <button type="submit" className='upload-button' disabled={uploading}>
                     {uploading ? 'Uploading...' : 'Upload'}
