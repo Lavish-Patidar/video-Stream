@@ -14,7 +14,7 @@ const ViewPage = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/videos/list');
+                const response = await axios.get('https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/list');
                 setVideos(response.data);
             } catch (error) {
                 console.error('Error fetching videos:', error);

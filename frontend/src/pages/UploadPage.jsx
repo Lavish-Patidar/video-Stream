@@ -26,7 +26,7 @@ const UploadPage = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:3000/api/videos/upload', formData, {
+            const response = await axios.post('https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
