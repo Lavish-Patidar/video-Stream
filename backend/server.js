@@ -6,9 +6,9 @@ const app = express();
 const PORT = process.env.PORT || 3000; // Default port for local development
 
 // Middleware
-app.use(cors({
-    origin: ['https://video-stream-qmsz63zkz-lavish-patidars-projects.vercel.app', 'http://localhost:5173'] // Allow requests from the frontend and local development
-}));
+app.use(cors())
+
+
 
 app.use(express.json());
 

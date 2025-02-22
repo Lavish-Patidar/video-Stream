@@ -39,10 +39,14 @@ const uploadVideo = async (req, res) => {
         await video.save();
 
         uploadStream.on('finish', () => {
+            console.log('Upload finished successfully'); // Log successful upload
+
             res.status(201).json({ message: 'Video uploaded successfully' });
         });
 
         uploadStream.on('error', (err) => {
+            console.error('Upload error:', err); // Log upload error
+
             res.status(500).json({ error: err.message });
         });
     } catch (err) {
