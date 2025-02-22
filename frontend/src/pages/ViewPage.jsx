@@ -14,7 +14,8 @@ const ViewPage = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const response = await axios.get('https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/list');
+                const response = await axios.get('https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/list'); // Fetch videos from the backend
+
                 setVideos(response.data);
             } catch (error) {
                 console.error('Error fetching videos:', error);
@@ -28,7 +29,8 @@ const ViewPage = () => {
 
     const handleEditVideo = async () => {
         try {
-            await axios.put(`http://localhost:3000/api/videos/${selectedVideo._id}`, {
+            await axios.put(`https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/${selectedVideo._id}`, {
+
                 title: editTitle
             });
             const updatedVideos = videos.map(v =>
@@ -44,7 +46,8 @@ const ViewPage = () => {
 
     const handleDeleteVideo = async (id) => {
         try {
-            axios.delete(`http://localhost:3000/api/videos/${id}`);
+            await axios.delete(`https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/${id}`);
+
             const updatedVideos = videos.filter(v => v._id !== id);
             setVideos(updatedVideos);
             alert('Video deleted successfully!');
@@ -68,7 +71,8 @@ const ViewPage = () => {
                                 <h3>{video.title}</h3>
                                 <video controls>
                                     <source
-                                        src={`http://localhost:3000/api/videos/stream/${video.filename}`}
+                                        src={`https://video-stream-api-lavish-patidars-projects.vercel.app/api/videos/stream/${video.filename}`}
+
                                         type="video/mp4"
                                     />
                                     Your browser does not support the video tag.
