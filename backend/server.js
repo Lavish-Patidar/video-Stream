@@ -5,9 +5,11 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000; // Default port for local development
 
-
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ['https://video-stream-qmsz63zkz-lavish-patidars-projects.vercel.app', 'http://localhost:5173'] // Allow requests from the frontend and local development
+}));
+
 app.use(express.json());
 
 // MongoDB Connection
@@ -27,7 +29,6 @@ const startServer = async () => {
 
             // Start server only after DB connection is established
             app.listen(PORT, () => { // Start server on the assigned port
-
                 console.log(`Server running on port ${PORT}`);
             });
         });
@@ -39,10 +40,8 @@ const startServer = async () => {
 
 startServer();
 
-
 // Import Video Routes
 const videoRoutes = require('./routes/videoRoutes');
-
 
 // Routes
 app.use('/api/videos', videoRoutes);
