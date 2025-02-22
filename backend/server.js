@@ -47,3 +47,4 @@ app.use('/api/videos', videoRoutes);
 app.get('/', (req, res) => {
     res.send('Video Streaming API');
 });
+
