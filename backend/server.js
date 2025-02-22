@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Default port for local development
+
 
 // Middleware
 app.use(cors());
@@ -25,7 +26,8 @@ const startServer = async () => {
             });
 
             // Start server only after DB connection is established
-            app.listen(PORT, () => {
+            app.listen(PORT, () => { // Start server on the assigned port
+
                 console.log(`Server running on port ${PORT}`);
             });
         });
@@ -47,4 +49,3 @@ app.use('/api/videos', videoRoutes);
 app.get('/', (req, res) => {
     res.send('Video Streaming API');
 });
-
